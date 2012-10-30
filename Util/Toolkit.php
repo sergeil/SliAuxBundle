@@ -219,6 +219,10 @@ class Toolkit
         return $reflProp->getValue($obj);
     }
 
+    /**
+     * @param $className
+     * @return ReflectionMethod[]
+     */
     static public function getIndexedReflectionMethods($className)
     {
         $methods = array();
@@ -272,5 +276,22 @@ class Toolkit
         $driver = $reflDriverProp->getValue($metadataFactory);
 
         $driver->addDriver($driverToInject, $namespace);
+    }
+
+    /**
+     * Determines if a bundle with provided $name is registered in $kernel.
+     *
+     * @param \Symfony\Component\HttpKernel\Kernel $kernel
+     * @param string $name
+     * @return bool
+     */
+    static public function isBundleEnabled(Kernel $kernel, $name)
+    {
+        try {
+            $kernel->getBundle($name);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
