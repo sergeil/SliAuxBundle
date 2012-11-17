@@ -24,6 +24,16 @@ class MockB extends MockA
     }
 }
 
+class DummyEntity
+{
+    public $id;
+
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+
 class FooX
 {
     public $a;
@@ -187,5 +197,21 @@ class ToolkitTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('variableName', TK::createVariableName('variable name'));
         $this->assertEquals('variablename', TK::createVariableName('variable$name '));
         $this->assertEquals('someOtherFckingVariable', TK::createVariableName('Some other f*cking variable! '));
+    }
+
+    public function testAssertEntitiesAreSame()
+    {
+        $entity1 = new DummyEntity();
+        $entity2 = new DummyEntity();
+
+        $this->assertTrue(Tk::assertEntitiesAreSame($entity1, $entity1));
+
+        $entity3 = new DummyEntity();
+        $entity3->id = 5;
+        $entity4 = new DummyEntity();
+        $entity4->id = 5;
+
+        $this->assertTrue(Tk::assertEntitiesAreSame($entity3, $entity4));
+
     }
 }
