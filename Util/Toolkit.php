@@ -297,6 +297,10 @@ class Toolkit
 
     static public function assertEntitiesAreSame($entity1, $entity2)
     {
+        if (null === $entity1 || null === $entity2) {
+            return false;
+        }
+
         if (!in_array('getId', get_class_methods(get_class($entity1))) ||
             !in_array('getId', get_class_methods(get_class($entity2)))) {
             throw new \RuntimeException("Entities must have method getId() declared!");
