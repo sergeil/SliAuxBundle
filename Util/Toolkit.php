@@ -312,4 +312,23 @@ class Toolkit
             return $entity1->getId() === $entity2->getId();
         }
     }
+
+    /**
+     * @throws \RuntimeException  If some of $requiredParams were not provided
+     * @param array $params
+     * @param array $requiredKeys
+     */
+    static public function validateRequiredRequestParams(array $params, array $requiredKeys)
+    {
+        $missingKeys = array();
+        foreach ($requiredKeys as $key) {
+            if (!isset($params[$key])) {
+                $missingKeys[] = $key;
+            }
+        }
+
+        if (count($missingKeys) > 0) {
+            throw new \RuntimeException('These request parameters must be provided: '.implode(', ', $missingKeys));
+        }
+    }
 }
