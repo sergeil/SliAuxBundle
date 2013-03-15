@@ -2,7 +2,7 @@
     "name": "sergeil/aux-bundle",
     "description": "Contains base/utility classes for Sli/* bundles.",
     "keywords": ["utils"],
-    "homepage": "https://github.com/sergeil/ExpanderBundle",
+    "homepage": "https://github.com/sergeil/SliAuxBundle",
     "type": "symfony-bundle",
     "license": "MIT",
     "minimum-stability": "dev",
