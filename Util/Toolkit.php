@@ -5,7 +5,7 @@ namespace Sli\AuxBundle\Util;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpKernel\Kernel;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\Driver\Driver;
+use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
 
 /**
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
@@ -260,7 +260,7 @@ class Toolkit
         return $compiled;
     }
 
-    static public function addMetadataDriverForEntityManager(EntityManager $em, Driver $driverToInject, $namespace)
+    static public function addMetadataDriverForEntityManager(EntityManager $em, MappingDriver $driverToInject, $namespace)
     {
         $metadataFactory = $em->getMetadataFactory();
         $reflMetadataFactory = new \ReflectionClass($metadataFactory);
