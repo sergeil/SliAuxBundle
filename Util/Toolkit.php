@@ -111,7 +111,12 @@ class Toolkit
     static public function classHasMethodDeclared($fqcn, $methodName)
     {
         $reflClass = new \ReflectionClass($fqcn);
-        $reflMethod = $reflClass->getMethod($methodName);
+
+        try {
+            $reflMethod = $reflClass->getMethod($methodName);
+        } catch (\Exception $e) {
+            return false;
+        }
 
         return $reflMethod->getDeclaringClass()->getName() == $fqcn;
     }
@@ -221,7 +226,7 @@ class Toolkit
 
     /**
      * @param $className
-     * @return ReflectionMethod[]
+     * @return \ReflectionMethod[]
      */
     static public function getIndexedReflectionMethods($className)
     {

@@ -138,6 +138,7 @@ class ToolkitTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue(TK::classHasMethodDeclared('Sli\AuxBundle\Tests\Util\MockA', 'fooMethod'));
         $this->assertFalse(TK::classHasMethodDeclared('Sli\AuxBundle\Tests\Util\MockB', 'fooMethod'));
+        $this->assertFalse(TK::classHasMethodDeclared('Sli\AuxBundle\Tests\Util\MockB', 'blahMethod'));
     }
 
     public function testCopyProperties()
