@@ -76,6 +76,10 @@ class Toolkit
         return $result;
     }
 
+    /**
+     * @param string $className
+     * @return \ReflectionProperty[]
+     */
     static public function getReflectionProperties($className)
     {
         return self::getReflectionSomething($className, 'getProperties');
