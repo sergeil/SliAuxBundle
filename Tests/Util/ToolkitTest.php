@@ -138,6 +138,7 @@ class ToolkitTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue(TK::classHasMethodDeclared('Sli\AuxBundle\Tests\Util\MockA', 'fooMethod'));
         $this->assertFalse(TK::classHasMethodDeclared('Sli\AuxBundle\Tests\Util\MockB', 'fooMethod'));
+        $this->assertFalse(TK::classHasMethodDeclared('Sli\AuxBundle\Tests\Util\MockB', 'blahMethod'));
     }
 
     public function testCopyProperties()
@@ -212,6 +213,11 @@ class ToolkitTest extends \PHPUnit_Framework_TestCase
         $entity4->id = 5;
 
         $this->assertTrue(Tk::assertEntitiesAreSame($entity3, $entity4));
+    }
 
+    public function testUnderscorizeCamelCasedString()
+    {
+        $this->assertEquals('camel_case', Tk::underscorizeCamelCasedString('camelCase'));
+        $this->assertEquals('foo_bar_baz', Tk::underscorizeCamelCasedString('fooBar_Baz'));
     }
 }

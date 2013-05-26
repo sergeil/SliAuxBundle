@@ -115,7 +115,12 @@ class Toolkit
     static public function classHasMethodDeclared($fqcn, $methodName)
     {
         $reflClass = new \ReflectionClass($fqcn);
-        $reflMethod = $reflClass->getMethod($methodName);
+
+        try {
+            $reflMethod = $reflClass->getMethod($methodName);
+        } catch (\Exception $e) {
+            return false;
+        }
 
         return $reflMethod->getDeclaringClass()->getName() == $fqcn;
     }
@@ -225,7 +230,7 @@ class Toolkit
 
     /**
      * @param $className
-     * @return ReflectionMethod[]
+     * @return \ReflectionMethod[]
      */
     static public function getIndexedReflectionMethods($className)
     {
@@ -334,5 +339,31 @@ class Toolkit
         if (count($missingKeys) > 0) {
             throw new \RuntimeException('These request parameters must be provided: '.implode(', ', $missingKeys));
         }
+    }
+
+    /**
+     * Converts strings like "fooBarBaz" to "foo_bar_baz"
+     *
+     * @param $string
+     * @return string
+     */
+    static public function underscorizeCamelCasedString($string)
+    {
+        $result = '';
+        for ($i=0; $i<strlen($string); $i++) {
+            $char = $string{$i};
+
+            if (strtoupper($char) === $char) {
+                if ( (isset($string{$i-1}) && '_' != $string{$i-1}) || !isset($string{$i-1})  ) {
+                    $result .= '_';
+                }
+            }
+
+            if ('_' != $char) {
+                $result .= $char;
+            }
+        }
+
+        return strtolower($result);
     }
 }
