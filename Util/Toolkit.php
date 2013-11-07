@@ -2,6 +2,7 @@
 
 namespace Sli\AuxBundle\Util;
 
+use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpKernel\Kernel;
 use Doctrine\ORM\EntityManager;
@@ -287,6 +288,28 @@ class Toolkit
         $driver->addDriver($driverToInject, $namespace);
     }
 
+    static public function createTableFoEntity(EntityManager $em, $className)
+    {
+        $schemaTool = new SchemaTool($em);
+        $metadataFactory = $em->getMetadataFactory();
+
+        $meta = array(
+            $metadataFactory->getMetadataFor($className)
+        );
+
+        $schemaTool->updateSchema($meta, true);
+    }
+
+    static public function dropTableForEntity(EntityManager $em, $className)
+    {
+        $schemaTool = new SchemaTool($em);
+        $metadataFactory = $em->getMetadataFactory();
+
+        $schemaTool->dropSchema(array(
+            $metadataFactory->getMetadataFor($className)
+        ));
+    }
+
     /**
      * Determines if a bundle with provided $name is registered in $kernel.
      *
@@ -337,7 +360,11 @@ class Toolkit
         }
 
         if (count($missingKeys) > 0) {
-            throw new \RuntimeException('These request parameters must be provided: '.implode(', ', $missingKeys));
+            $e = new RequiredRequestParametersNotProvidedException(
+                'These request parameters must be provided: '.implode(', ', $missingKeys)
+            );
+            $e->setParameters($missingKeys);
+            throw $e;
         }
     }
 
