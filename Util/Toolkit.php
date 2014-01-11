@@ -2,6 +2,8 @@
 
 namespace Sli\AuxBundle\Util;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpKernel\Kernel;
@@ -253,6 +255,7 @@ class Toolkit
 
     /**
      * @param string $sentence
+     *
      * @return array
      */
     static public function createVariableName($sentence)
@@ -270,6 +273,13 @@ class Toolkit
         return $compiled;
     }
 
+    /**
+     * Will dynamically inject a given $driverToInject to the $em.
+     *
+     * @param EntityManager $em
+     * @param MappingDriver $driverToInject
+     * @param string $namespace
+     */
     static public function addMetadataDriverForEntityManager(EntityManager $em, MappingDriver $driverToInject, $namespace)
     {
         $metadataFactory = $em->getMetadataFactory();
@@ -286,6 +296,18 @@ class Toolkit
         $driver = $reflDriverProp->getValue($metadataFactory);
 
         $driver->addDriver($driverToInject, $namespace);
+    }
+
+    /**
+     * @param EntityManager $em
+     * @param string $namespace
+     * @param string $dir
+     */
+    static public function addAnnotationMetadataDriverForEntityManager(EntityManager $em, $namespace, $dir)
+    {
+        $driver = new AnnotationDriver(new AnnotationReader(), $dir) ;
+
+        Toolkit::addMetadataDriverForEntityManager($em, $driver, $namespace);
     }
 
     static public function createTableFoEntity(EntityManager $em, $className)
