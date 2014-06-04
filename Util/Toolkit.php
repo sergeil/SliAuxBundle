@@ -219,7 +219,9 @@ class Toolkit
 
     static public function setPropertyValue($obj, $propertyName, $propertyValue)
     {
-        $reflProp = self::getReflectionProperty(get_class($obj), $propertyName);
+        $className = is_object($obj) ? get_class($obj) : $obj;
+
+        $reflProp = self::getReflectionProperty($className, $propertyName);
         $reflProp->setAccessible(true);
         $reflProp->setValue($obj, $propertyValue);
     }
