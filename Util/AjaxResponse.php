@@ -5,6 +5,8 @@ namespace Sli\AuxBundle\Util;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * @deprecated Use \Symfony\Component\HttpFoundation\JsonResponse instead
+ *
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
  */
 class AjaxResponse extends Response
@@ -17,5 +19,4 @@ class AjaxResponse extends Response
 
         parent::__construct(json_encode($content), $status, $headers);
     }
-
 }

@@ -25,6 +25,12 @@ class Toolkit
         return count($input) == $arrayKeysAmount;
     }
 
+    /**
+     * @param \Iterator $col
+     * @param string $method
+     *
+     * @return array
+     */
     static public function extractIds($col, $method = 'getId')
     {
         if (!$col) {
@@ -33,8 +39,13 @@ class Toolkit
 
         $ids = array();
         foreach ($col as $item) {
-            $ids[] = $item->{$method}();
+            if (in_array($method, get_class_methods($item))) {
+                $ids[] = $item->{$method}();
+            } else {
+                $ids[] = Toolkit::getPropertyValue($item, 'id');
+            }
         }
+
         return $ids;
     }
 

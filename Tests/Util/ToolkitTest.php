@@ -3,6 +3,7 @@
 namespace Sli\AuxBundle\Tests\Util;
 
 use Sli\AuxBundle\Util\Toolkit as TK;
+use Sli\AuxBundle\Util\Toolkit;
 
 class MockA
 {
@@ -27,6 +28,11 @@ class MockB extends MockA
 class DummyEntity
 {
     public $id;
+
+    public function __construct($id = null)
+    {
+        $this->id = $id;
+    }
 
     public function getId()
     {
@@ -83,6 +89,16 @@ class FooZ
     public function getA()
     {
         return $this->a;
+    }
+}
+
+class EntityWithNoGetterForId
+{
+    private $id;
+
+    public function __construct($id)
+    {
+        $this->id = $id;
     }
 }
 
@@ -219,5 +235,16 @@ class ToolkitTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals('camel_case', Tk::underscorizeCamelCasedString('camelCase'));
         $this->assertEquals('foo_bar_baz', Tk::underscorizeCamelCasedString('fooBar_Baz'));
+    }
+
+    public function testExtractIds()
+    {
+        $col = array(
+            new EntityWithNoGetterForId(5),
+            new EntityWithNoGetterForId(8),
+            new DummyEntity(10)
+        );
+
+        $this->assertSame(array(5, 8, 10), Toolkit::extractIds($col));
     }
 }
