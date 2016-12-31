@@ -14,3 +14,6 @@ matrix:
 
 before_install:
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update; fi;
+
+before_script:
+  - composer install
