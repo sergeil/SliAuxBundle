@@ -53,7 +53,7 @@ class Toolkit
     {
         if (strlen($plural) > 4 && substr($plural, -3) == 'ies') {
             return substr($plural, 0, -3);
-        } else if (strlen($plural) > 3 && substr($plural, -2) == 'es' && $plural{strlen($plural)-3} == 'e' || $plural{strlen($plural)-2} == 'e') { // employEEs
+        } else if (strlen($plural) > 3 && substr($plural, -2) == 'es' && $plural[strlen($plural)-3] == 'e' || $plural[strlen($plural)-2] == 'e') { // employEEs
             return substr($plural, 0, -1);
         } else if (strlen($plural) > 3 && substr($plural, -2) == 'es') {
             return substr($plural, 0, -2);
@@ -63,7 +63,7 @@ class Toolkit
 
     static public function plurifyWord($input)
     {
-        $lastChar = $input{strlen($input)-1};
+        $lastChar = $input[strlen($input)-1];
         if ('y' == $lastChar) {
             return substr($input, 0, strlen($input)-1).'ies';
         } else if (in_array($lastChar, array('x', 's'))) {
@@ -413,10 +413,10 @@ class Toolkit
     {
         $result = '';
         for ($i=0; $i<strlen($string); $i++) {
-            $char = $string{$i};
+            $char = $string[$i];
 
             if (strtoupper($char) === $char) {
-                if ( (isset($string{$i-1}) && '_' != $string{$i-1}) || !isset($string{$i-1})  ) {
+                if ( (isset($string[$i-1]) && '_' != $string[$i-1]) || !isset($string[$i-1])  ) {
                     $result .= '_';
                 }
             }
