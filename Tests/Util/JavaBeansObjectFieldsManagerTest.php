@@ -58,7 +58,7 @@ class MockTargetClz
 /**
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
  */
-class JavaBeansObjectFieldsManagerTest extends \PHPUnit_Framework_TestCase
+class JavaBeansObjectFieldsManagerTest extends \PHPUnit\Framework\TestCase
 {
     /* @var \Transportir\CoreBundle\Util\JavaBeansObjectFieldsManager*/
     private $mgm;
