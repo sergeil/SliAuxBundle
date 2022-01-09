@@ -105,7 +105,7 @@ class EntityWithNoGetterForId
 /**
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
  */
-class ToolkitTest extends \PHPUnit_Framework_TestCase
+class ToolkitTest extends \PHPUnit\Framework\TestCase
 {
     public function testIsArrayMultiDimensionalTest()
     {
